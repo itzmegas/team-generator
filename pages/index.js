@@ -3,7 +3,7 @@ import Image from "next/image";
 import PlayerList from "../components/PlayerList";
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+const Home = ({ players }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <PlayerList />
+        <PlayerList players={players} />
       </main>
 
       <footer className={styles.footer}>
@@ -30,4 +30,15 @@ export default function Home() {
       </footer>
     </div>
   );
+};
+
+export async function getStaticProps() {
+  const res = await fetch("http://localhost:3000/api/players");
+  const players = await res.json();
+
+  return {
+    props: { players },
+  };
 }
+
+export default Home;
