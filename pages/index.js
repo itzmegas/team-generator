@@ -1,9 +1,33 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 import PlayerList from "../components/PlayerList";
+import Teams from "../components/Teams";
 import styles from "../styles/Home.module.css";
 
 const Home = ({ players }) => {
+  const [teams, setTeams] = useState();
+  console.log("🚀 ~ file: index.js ~ line 10 ~ Home ~ teams", teams);
+
+  const sortTeams = () => {
+    const random = players
+      .map((player) => ({ player, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .reduce(
+        (acc, { player }, i) => {
+          if (i < players.length / 2) {
+            acc.team1.push(player);
+          } else {
+            acc.team2.push(player);
+          }
+          return acc;
+        },
+        { team1: [], team2: [] }
+      );
+
+    setTeams(random);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,20 +38,10 @@ const Home = ({ players }) => {
 
       <main className={styles.main}>
         <PlayerList players={players} />
-      </main>
+        <button onClick={() => sortTeams()}>Sort Teams</button>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+        {teams !== undefined && <Teams teams={teams} />}
+      </main>
     </div>
   );
 };

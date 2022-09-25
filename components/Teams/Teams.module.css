@@ -1,0 +1,11 @@
+.teams {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  justify-items: center;
+}
