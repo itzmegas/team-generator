@@ -40,7 +40,7 @@ const Home = ({ players }) => {
 };
 
 export async function getStaticProps() {
-  const res = await fetch("http://localhost:3000/api/players");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/players`);
   const players = await res.json();
 
   return {
