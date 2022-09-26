@@ -6,7 +6,19 @@ import { createTeams } from "../utils/createTeams";
 import styles from "../styles/Home.module.css";
 import { Button } from "reactstrap";
 
-const Home = ({ players }) => {
+const Home = () => {
+  const players = [
+    { id: 1, name: "javi", card: "/assets/javi.png" },
+    { id: 2, name: "manu", card: "/assets/manu.png" },
+    { id: 3, name: "alan", card: "/assets/alan.png" },
+    { id: 4, name: "megas", card: "/assets/megas.png" },
+    { id: 5, name: "truco", card: "/assets/truco.png" },
+    { id: 6, name: "nicog", card: "/assets/nico.png" },
+    { id: 7, name: "erik", card: "/assets/erik.png" },
+    { id: 8, name: "nahuel", card: "/assets/nahuel.png" },
+    { id: 9, name: "maxito", card: "/assets/maxito.png" },
+    { id: 10, name: "alexis", card: "/assets/alexis.png" },
+  ];
   const [shufflePlayers, setShufflePlayers] = useState(createTeams(players));
   const [showTeams, setShowTeams] = useState(false);
 
@@ -38,14 +50,5 @@ const Home = ({ players }) => {
     </div>
   );
 };
-
-export async function getStaticProps() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/players`);
-  const players = await res.json();
-
-  return {
-    props: { players },
-  };
-}
 
 export default Home;
