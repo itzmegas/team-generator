@@ -1,7 +1,7 @@
 .teams {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  justify-items: center;
+  display: flex;
+  align-items: center;
+  gap: 6rem;
   width: 100%;
 }
 
@@ -17,11 +17,23 @@
   border: solid 2px white;
   border-radius: 2rem;
   background: url("/assets/grass.jpg");
+  background-size: cover;
   background-repeat: no-repeat;
-  background-size: 100%;
   width: 90%;
 }
 
 .headItem {
   grid-area: head;
+}
+
+@media (max-width: 1200px) {
+  .teams {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 425px) {
+  .noTeams {
+    flex-direction: column;
+  }
 }
