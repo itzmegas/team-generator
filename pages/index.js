@@ -1,31 +1,20 @@
-import Head from "next/head";
-import Image from "next/image";
 import { useState } from "react";
-import PlayerList from "../components/PlayerList";
+import { shuffle } from "lodash";
+import Head from "next/head";
 import Teams from "../components/Teams";
+import { createTeams } from "../utils/createTeams";
 import styles from "../styles/Home.module.css";
+import { Button } from "reactstrap";
 
 const Home = ({ players }) => {
-  const [teams, setTeams] = useState();
-  console.log("🚀 ~ file: index.js ~ line 10 ~ Home ~ teams", teams);
+  const [shufflePlayers, setShufflePlayers] = useState(createTeams(players));
+  const [showTeams, setShowTeams] = useState(false);
 
   const sortTeams = () => {
-    const random = players
-      .map((player) => ({ player, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .reduce(
-        (acc, { player }, i) => {
-          if (i < players.length / 2) {
-            acc.team1.push(player);
-          } else {
-            acc.team2.push(player);
-          }
-          return acc;
-        },
-        { team1: [], team2: [] }
-      );
-
-    setTeams(random);
+    setTimeout(() => {
+      setShufflePlayers(createTeams(shuffle(players)));
+    }, 700);
+    setShowTeams(true);
   };
 
   return (
@@ -37,10 +26,14 @@ const Home = ({ players }) => {
       </Head>
 
       <main className={styles.main}>
-        <PlayerList players={players} />
-        <button onClick={() => sortTeams()}>Sort Teams</button>
-
-        {teams !== undefined && <Teams teams={teams} />}
+        <Teams players={shufflePlayers} showTeams={showTeams} />
+        <Button
+          color="danger"
+          className={styles.button}
+          onClick={() => sortTeams()}
+        >
+          Sortear Equipos
+        </Button>
       </main>
     </div>
   );
